@@ -1,17 +1,19 @@
 package ru.otus.asamofalov.service;
 
-import java.io.InputStream;
+import org.springframework.stereotype.Service;
+
 import java.io.PrintStream;
 import java.util.Scanner;
 
+@Service
 public class IOServiceStreams implements IOService {
 
     private final PrintStream output;
     private final Scanner input;
 
-    public IOServiceStreams(PrintStream outputStream, InputStream inputStream) {
-        output = outputStream;
-        input = new Scanner(inputStream);
+    public IOServiceStreams() {
+        output = System.out;
+        input = new Scanner(System.in);
     }
 
     @Override

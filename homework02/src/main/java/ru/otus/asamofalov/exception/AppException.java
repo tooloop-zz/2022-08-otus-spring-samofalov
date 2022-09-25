@@ -1,6 +1,6 @@
 package ru.otus.asamofalov.exception;
 
-public class AppException extends Exception {
+public class AppException extends RuntimeException {
 
     public AppException() {
         super();

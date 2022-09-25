@@ -1,4 +1,6 @@
-package ru.otus.asamofalov.helper;
+package ru.otus.asamofalov.service;
+
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,9 +10,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class CsvParser {
+@Component
+public class CsvParserImpl implements CsvParser {
 
-    public static String[][] parse(String fileName) throws IOException {
+    public String[][] parse(String fileName) throws IOException {
 
         List<String[]> result = new ArrayList<>();
 
@@ -22,11 +25,11 @@ public final class CsvParser {
         return result.toArray(new String[0][0]);
     }
 
-    private static String[] getLines(String fileName) throws IOException {
+    private String[] getLines(String fileName) throws IOException {
 
         List<String> result = new ArrayList<>();
 
-        ClassLoader classLoader = CsvParser.class.getClassLoader();
+        ClassLoader classLoader = getClass().getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream(fileName);
 
         try (InputStreamReader streamReader =
