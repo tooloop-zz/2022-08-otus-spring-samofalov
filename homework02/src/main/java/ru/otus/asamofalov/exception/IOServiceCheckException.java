@@ -1,0 +1,7 @@
+package ru.otus.asamofalov.exception;
+
+public class IOServiceCheckException extends AppException {
+    public IOServiceCheckException() {
+        super();
+    }
+}
