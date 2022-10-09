@@ -1,0 +1,5 @@
+${AnsiColor.BLACK} _        _                 ${AnsiColor.RED} _                    _    
+${AnsiColor.BLACK}| |_ __ _| | _____    __ _  ${AnsiColor.RED}| |__  _ __ ___  __ _| | __
+${AnsiColor.BLACK}| __/ _` | |/ / _ \  / _` | ${AnsiColor.RED}| '_ \| '__/ _ \/ _` | |/ /
+${AnsiColor.BLACK}| || (_| |   <  __/ | (_| | ${AnsiColor.RED}| |_) | | |  __/ (_| |   < 
+${AnsiColor.BLACK} \__\__,_|_|\_\___|  \__,_| ${AnsiColor.RED}|_.__/|_|  \___|\__,_|_|\_\
