@@ -1,0 +1,8 @@
+filename: questions.csv
+rightAnswersLimit: 4
+#locale: en
+locale: ru_RU
+spring:
+  messages:
+    basename: "i18n/messages"
+    encoding: "UTF-8"
