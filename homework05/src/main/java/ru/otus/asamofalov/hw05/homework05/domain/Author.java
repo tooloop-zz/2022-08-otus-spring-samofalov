@@ -2,11 +2,16 @@ package ru.otus.asamofalov.hw05.homework05.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
+//@Setter
+@RequiredArgsConstructor
 public class Author {
 
-    String name;
+    private final String name;
+
+    @Override
+    public String toString() {
+        return String.format("author name: %s", name);
+    }
 }

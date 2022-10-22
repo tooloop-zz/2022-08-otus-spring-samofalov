@@ -11,3 +11,9 @@ spring:
       path: /h2-console
       settings:
         web-allow-others: true
+
+  shell:
+    interactive:
+      enabled: false
+  main:
+    allow-circular-references: true
