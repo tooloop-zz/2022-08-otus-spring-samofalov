@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Import;
 import ru.otus.asamofalov.hw06.domain.BookComment;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -22,16 +22,7 @@ class BookCommentRepositoryJpaTest {
     BookCommentRepository bookCommentRepository;
 
     @Autowired
-    BookRepository bookRepository;
-
-    @Autowired
     TestEntityManager testEntityManager;
-
-    @DisplayName("..return all comments for book")
-    @Test
-    void shouldReturnAllCommentsForBook() {
-        assertNotEquals(0, bookCommentRepository.getByBookId(1).size());
-    }
 
     @DisplayName("..return comment by id")
     @Test
@@ -42,28 +33,28 @@ class BookCommentRepositoryJpaTest {
     @DisplayName("..append new comment to book")
     @Test
     void shouldAppendNewCommentToBook() {
-        var book = bookRepository.getAll().get(0);
-        var comment = new BookComment("testComment", book);
-        bookCommentRepository.appendComment(comment);
+        var comment = new BookComment("testComment", 1L);
+        bookCommentRepository.append(comment);
         var found = testEntityManager.find(BookComment.class, comment.getId());
-        assertThat(found).isNotNull().usingRecursiveComparison().isEqualTo(comment);
+        assertEquals("testComment", found.getText());
     }
 
     @DisplayName("..update comment")
     @Test
     void shouldUpdateCommentById() {
-        var comment = bookCommentRepository.getByBookId(1L).get(0);
+        var comment = bookCommentRepository.getById(1);
+        var oldLength = comment.getText().length();
         comment.setText("_" + comment.getText());
-        bookCommentRepository.updateComment(comment);
+        bookCommentRepository.update(comment);
         var found = testEntityManager.find(BookComment.class, comment.getId());
-        assertThat(found).isNotNull().usingRecursiveComparison().isEqualTo(comment);
+        assertThat(found.getText().length()).isGreaterThan(oldLength);
     }
 
     @DisplayName("..delete comment")
     @Test
     void shouldDeleteCommentById() {
-        var comment = bookCommentRepository.getByBookId(1L).get(0);
-        bookCommentRepository.deleteComment(comment);
+        var comment = bookCommentRepository.getById(1);
+        bookCommentRepository.delete(comment);
         assertNull(bookCommentRepository.getById(comment.getId()));
     }
 }

@@ -8,11 +8,11 @@ public interface BookRepository {
 
     List<Book> getAll();
 
-    Book getBook(long id);
+    Book getById(long id);
 
-    void deleteBook(Book book);
+    void delete(Book book);
 
-    Book appendBook(Book book);
+    Book append(Book book);
 
-    Book updateBook(Book book);
+    Book update(Book book);
 }

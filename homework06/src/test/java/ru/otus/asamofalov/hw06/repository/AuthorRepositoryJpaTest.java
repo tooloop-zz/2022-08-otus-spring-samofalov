@@ -29,7 +29,7 @@ class AuthorRepositoryJpaTest {
     @Test
     void shouldAppendNewGenres() {
         Author author = new Author("NewAuthor");
-        Author appended = authorRepository.appendAuthor(author);
+        Author appended = authorRepository.append(author);
         Author found = testEntityManager.find(Author.class, appended.getId());
         assertThat(found).isNotNull().usingRecursiveComparison().isEqualTo(appended);
     }
@@ -49,6 +49,5 @@ class AuthorRepositoryJpaTest {
                 () -> assertNotEquals(0, author.getId()),
                 () -> assertEquals("Plagiarist", author.getName())
         );
-
     }
 }

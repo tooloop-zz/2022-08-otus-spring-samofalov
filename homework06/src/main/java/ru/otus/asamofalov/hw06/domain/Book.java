@@ -12,7 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "books")
@@ -24,17 +27,22 @@ public class Book {
     @Setter
     String title;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     @Getter
     @Setter
     Author author;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
     @Getter
     @Setter
     Genre genre;
+
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    @Getter
+    List<BookComment> comments = new ArrayList<>();
 
     @Id
     @Column(name = "id")
@@ -53,5 +61,4 @@ public class Book {
         return String.format("book id:%s, title: %s, (%s), (%s)",
                 id, title, author.toString(), genre.toString());
     }
-
 }

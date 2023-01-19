@@ -9,8 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -29,13 +27,14 @@ public class BookComment {
     @Setter
     private String text;
 
-    @ManyToOne(targetEntity = Book.class)
-    @JoinColumn(name = "book_id", referencedColumnName = "id")
-    private Book book;
+    @Column(name = "book_id")
+    @Getter
+    @Setter
+    private long bookId;
 
-    public BookComment(String text, Book book) {
+    public BookComment(String text, long bookId) {
         this.text = text;
-        this.book = book;
+        this.bookId = bookId;
     }
 
     @Override

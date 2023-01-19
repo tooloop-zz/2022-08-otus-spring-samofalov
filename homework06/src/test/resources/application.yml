@@ -9,7 +9,11 @@ spring:
       path: /h2-console
       settings:
         web-allow-others: true
-
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
   shell:
     interactive:
       enabled: false

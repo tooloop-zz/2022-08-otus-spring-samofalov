@@ -6,6 +6,7 @@ import ru.otus.asamofalov.hw06.domain.Genre;
 import ru.otus.asamofalov.hw06.helper.FormattedList;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 @Slf4j
@@ -22,23 +23,18 @@ public class GenreRepositoryJpa implements GenreRepository {
 
     @Override
     public Genre getByName(String name) {
-        try {
-            return entityManager.createQuery("select g from Genre g where g.name = :name", Genre.class)
-                    .setParameter("name", name)
-                    .getSingleResult();
-        } catch (Exception e) {
-            log.warn("genre {} not found", name);
-            return null;
-        }
+        return entityManager.createQuery("select g from Genre g where g.name = :name", Genre.class)
+                .setParameter("name", name)
+                .getSingleResult();
     }
 
     @Override
-    public Genre appendGenre(Genre genre) {
-        Genre found = getByName(genre.getName());
-        if (found != null) {
-            return found;
+    public Genre append(Genre genre) {
+        try {
+            return getByName(genre.getName());
+        } catch (NoResultException e) {
+            entityManager.persist(genre);
+            return genre;
         }
-        entityManager.persist(genre);
-        return genre;
     }
 }

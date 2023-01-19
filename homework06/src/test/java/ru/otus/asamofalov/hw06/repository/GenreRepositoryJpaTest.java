@@ -29,7 +29,7 @@ class GenreRepositoryJpaTest {
     @Test
     void shouldAppendNewGenre() {
         Genre genre = new Genre("Fantasy");
-        Genre appended = genreRepository.appendGenre(genre);
+        Genre appended = genreRepository.append(genre);
         Genre found = testEntityManager.find(Genre.class, appended.getId());
         assertThat(found).isNotNull().usingRecursiveComparison().isEqualTo(appended);
     }

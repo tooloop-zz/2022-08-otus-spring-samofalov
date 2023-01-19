@@ -9,5 +9,5 @@ public interface GenreRepository {
 
     Genre getByName(String name);
 
-    Genre appendGenre(Genre genre);
+    Genre append(Genre genre);
 }

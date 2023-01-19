@@ -1,13 +1,14 @@
 package ru.otus.asamofalov.hw06.repository;
 
 import ru.otus.asamofalov.hw06.domain.Author;
-import ru.otus.asamofalov.hw06.helper.FormattedList;
+
+import java.util.List;
 
 public interface AuthorRepository {
 
-    FormattedList<Author> getAll();
+    List<Author> getAll();
 
     Author getByName(String name);
 
-    Author appendAuthor(Author author);
+    Author append(Author author);
 }

@@ -6,15 +6,13 @@ import ru.otus.asamofalov.hw06.domain.BookComment;
 import ru.otus.asamofalov.hw06.domain.Genre;
 import ru.otus.asamofalov.hw06.helper.FormattedList;
 
-import java.util.List;
-
 public interface BookService {
 
     FormattedList<Author> getAllAuthors();
 
     FormattedList<Genre> getAllGenres();
 
-    List<Book> getAll();
+    FormattedList<Book> getAll();
 
     Book getBook(long id);
 
@@ -30,7 +28,7 @@ public interface BookService {
 
     BookComment appendComment(long bookId, String text);
 
-    void deleteComment(long bookCommentId);
+    BookComment updateComment(long commentId, String text);
 
-    BookComment updateComment(long bookCommentId, String text);
+    void deleteComment(long bookCommentId);
 }

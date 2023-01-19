@@ -95,7 +95,7 @@ databaseChangeLog:
                   name: book_id
                   type: bigint
                   constraints:
-                    nullable: false
+                    nullable: true
                     foreignKeyName: fk_book_id
                     references: books(id)
             tableName: book_comments
