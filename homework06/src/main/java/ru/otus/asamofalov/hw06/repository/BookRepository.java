@@ -10,6 +10,8 @@ public interface BookRepository {
 
     Book getById(long id);
 
+    Book getByIdWithComments(long id);
+
     void delete(Book book);
 
     Book append(Book book);

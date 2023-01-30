@@ -77,6 +77,6 @@ class BookRepositoryJpaTest {
     @Test
     @DisplayName("..check for book's comments count")
     void shouldGetComments() {
-        assertEquals(5, bookRepository.getById(1L).getComments().size());
+        assertEquals(5, bookRepository.getByIdWithComments(1L).getComments().size());
     }
 }

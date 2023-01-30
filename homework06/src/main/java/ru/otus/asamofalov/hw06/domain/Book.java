@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
@@ -20,7 +22,15 @@ import java.util.List;
 @Entity
 @Table(name = "books")
 @NoArgsConstructor
+@NamedEntityGraph(name = "book-comments-entity-graph",
+        attributeNodes = {@NamedAttributeNode("comments")})
 public class Book {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
+    private long id;
 
     @Column(name = "title")
     @Getter
@@ -42,13 +52,8 @@ public class Book {
     @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "book_id", referencedColumnName = "id")
     @Getter
-    List<BookComment> comments = new ArrayList<>();
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    private long id;
+    @Setter
+    private List<BookComment> comments = new ArrayList<>();
 
     public Book(String title, Author author, Genre genre) {
         this.title = title;

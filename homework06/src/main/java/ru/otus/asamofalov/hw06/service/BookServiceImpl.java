@@ -86,7 +86,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @ShellMethod(value = "get comments list by bookId", key = {"lc", "list-comments"})
     public FormattedList<BookComment> getAllComments(long bookId) {
-        return new FormattedList<>(bookRepository.getById(bookId).getComments());
+        return new FormattedList<>(bookRepository.getByIdWithComments(bookId).getComments());
     }
 
     @Override
