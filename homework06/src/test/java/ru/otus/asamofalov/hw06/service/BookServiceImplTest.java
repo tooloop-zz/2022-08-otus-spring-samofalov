@@ -112,7 +112,7 @@ class BookServiceImplTest {
         Book book = new Book("title", new Author("author"), new Genre("genre"));
         book.getComments().add(new BookComment("comment1", 0));
         book.getComments().add(new BookComment("comment2", 0));
-        when(bookRepository.getByIdWithComments(anyLong())).thenReturn(book);
+        when(bookRepository.getById(anyLong())).thenReturn(book);
         assertEquals(2, bookService.getAllComments(0).size());
     }
 

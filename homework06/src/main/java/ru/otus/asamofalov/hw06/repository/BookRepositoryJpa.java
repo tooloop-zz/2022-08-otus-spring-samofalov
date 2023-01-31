@@ -37,13 +37,13 @@ public class BookRepositoryJpa implements BookRepository {
         return entityManager.find(Book.class, id);
     }
 
-    @Override
-    public Book getByIdWithComments(long id) {
-        EntityGraph<?> entityGraph = entityManager.getEntityGraph("book-comments-entity-graph");
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("javax.persistence.fetchgraph", entityGraph);
-        return entityManager.find(Book.class, id, properties);
-    }
+//    @Override
+//    public Book getByIdWithComments(long id) {
+//        EntityGraph<?> entityGraph = entityManager.getEntityGraph("book-comments-entity-graph");
+//        Map<String, Object> properties = new HashMap<>();
+//        properties.put("javax.persistence.fetchgraph", entityGraph);
+//        return entityManager.find(Book.class, id, properties);
+//    }
 
     @Override
     public void delete(Book book) {
