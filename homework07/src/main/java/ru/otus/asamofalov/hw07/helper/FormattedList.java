@@ -1,12 +1,11 @@
 package ru.otus.asamofalov.hw07.helper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FormattedList<T> extends ArrayList<T> {
 
-    public FormattedList(List<T> list) {
-        super.addAll(list);
+    public FormattedList(Iterable<T> iterable) {
+        iterable.forEach(super::add);
     }
 
     @Override

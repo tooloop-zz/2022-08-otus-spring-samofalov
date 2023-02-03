@@ -51,28 +51,25 @@ public class BookServiceImpl implements BookService {
     @Override
     @ShellMethod(value = "get book by id", key = {"r", "read"})
     public Book getBook(long id) {
-        return bookRepository.findById(id);
+        return bookRepository.findById(id).get();
     }
 
     @Override
     @ShellMethod(value = "append new book", key = {"c", "create"})
-    @Transactional
     public Book appendBook(String title, String authorName, String genreName) {
         return bookRepository.save(new Book(title, findOrAppendAuthor(authorName), findOrAppendGenre(genreName)));
     }
 
     @Override
     @ShellMethod(value = "update book title by id", key = {"u", "update"})
-    @Transactional
     public Book updateBook(long id, String title) {
-        Book book = bookRepository.findById(id);
+        Book book = bookRepository.findById(id).get();
         book.setTitle(title);
         return bookRepository.save(book);
     }
 
     @Override
     @ShellMethod(value = "delete book by id", key = {"d", "delete"})
-    @Transactional
     public void deleteBook(long id) {
         bookRepository.deleteById(id);
     }
@@ -81,35 +78,31 @@ public class BookServiceImpl implements BookService {
     @ShellMethod(value = "get comments list by bookId", key = {"lc", "list-comments"})
     @Transactional(readOnly = true)
     public List<BookComment> getAllComments(long bookId) {
-        return new FormattedList<>(bookRepository.findById(bookId).getComments());
+        return new FormattedList<>(bookRepository.findById(bookId).get().getComments());
     }
 
     @Override
     @ShellMethod(value = "get comment by id", key = {"rc", "read-comment"})
     public BookComment getComment(long commentId) {
-        return bookCommentRepository.findById(commentId);
+        return bookCommentRepository.findById(commentId).get();
     }
 
     @Override
     @ShellMethod(value = "append comment for book", key = {"cc", "create-comment"})
-    @Transactional
     public BookComment appendComment(long bookId, String text) {
         return bookCommentRepository.save(new BookComment(bookId, text));
     }
 
     @Override
     @ShellMethod(value = "update comment for book", key = {"uc", "update-comment"})
-    @Transactional
     public BookComment updateComment(long commentId, String text) {
-        BookComment bookComment = bookCommentRepository.findById(commentId);
-        if (bookComment == null) return null;
+        BookComment bookComment = bookCommentRepository.findById(commentId).get();
         bookComment.setText(text);
         return bookCommentRepository.save(bookComment);
     }
 
     @Override
     @ShellMethod(value = "delete book's comment", key = {"dc", "delete-comment"})
-    @Transactional
     public void deleteComment(long commentId) {
         bookCommentRepository.deleteById(commentId);
     }
