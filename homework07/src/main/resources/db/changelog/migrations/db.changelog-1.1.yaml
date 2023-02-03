@@ -1,0 +1,105 @@
+databaseChangeLog:
+  - changeSet:
+      id: create tables
+      author: asamofalov
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: genre_pkey
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  startWith: 1
+                  incrementBy: 1
+              - column:
+                  name: name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+            tableName: genres
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: author_pkey
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  startWith: 1
+                  incrementBy: 1
+              - column:
+                  name: name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+            tableName: authors
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: book_pkey
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  startWith: 1
+                  incrementBy: 1
+              - column:
+                  name: title
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_author_id
+                    references: authors(id)
+              - column:
+                  name: genre_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_genre_id
+                    references: genres(id)
+            tableName: books
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: book_comment_pkey
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  startWith: 1
+                  incrementBy: 1
+              - column:
+                  name: text
+                  type: VARCHAR(10000)
+                  constraints:
+                    nullable: false
+                    unique: false
+              - column:
+                  name: book_id
+                  type: bigint
+                  constraints:
+                    nullable: true
+                    foreignKeyName: fk_book_id
+                    references: books(id)
+            tableName: book_comments
+        - addUniqueConstraint:
+            columnNames: title, author_id
+            tableName: books
+            constraintName: const_title_author
