@@ -15,6 +15,7 @@ import ru.otus.asamofalov.hw07.repository.BookRepository;
 import ru.otus.asamofalov.hw07.repository.GenreRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -61,7 +62,7 @@ class BookServiceImplTest {
     @DisplayName("..check for my book found")
     void shouldReturnMyBook() {
         var book = new Book("title", new Author("author"), new Genre("genre"));
-        when(bookRepository.findById(anyLong())).thenReturn(book);
+        when(bookRepository.findById(anyLong())).thenReturn(Optional.of(book));
         BookService bookService = new BookServiceImpl(bookRepository, authorRepository, genreRepository, bookCommentRepository);
         var found = bookService.getBook(1L);
         assertThat(found).isNotNull().usingRecursiveComparison().isEqualTo(book);
@@ -70,11 +71,11 @@ class BookServiceImplTest {
     @Test
     @DisplayName("..check for book updated")
     void shouldReturnCorrectUpdateAnswer() {
-        var book = new Book("newtitle", new Author("author"), new Genre("genre"));
-        when(bookRepository.findById(anyLong())).thenReturn(book);
+        var book = new Book("newTitle", new Author("author"), new Genre("genre"));
+        when(bookRepository.findById(anyLong())).thenReturn(Optional.of(book));
         when(bookRepository.save(any())).thenReturn(book);
         BookService bookService = new BookServiceImpl(bookRepository, authorRepository, genreRepository, bookCommentRepository);
-        var updated = bookService.updateBook(1L, "newtitle");
+        var updated = bookService.updateBook(1L, "newTitle");
         assertThat(updated).isNotNull().usingRecursiveComparison().isEqualTo(book);
     }
 
@@ -82,7 +83,7 @@ class BookServiceImplTest {
     @DisplayName("..check for book deleted")
     void shouldReturnCorrectDeleteAnswer() {
         var book = new Book("title", new Author("author"), new Genre("genre"));
-        when(bookRepository.findById(anyLong())).thenReturn(book);
+        when(bookRepository.findById(anyLong())).thenReturn(Optional.of(book));
         BookService bookService = new BookServiceImpl(bookRepository, authorRepository, genreRepository, bookCommentRepository);
         bookService.deleteBook(1L);
     }
@@ -112,7 +113,7 @@ class BookServiceImplTest {
         Book book = new Book("title", new Author("author"), new Genre("genre"));
         book.getComments().add(new BookComment(0, "comment1"));
         book.getComments().add(new BookComment(0, "comment2"));
-        when(bookRepository.findById(anyLong())).thenReturn(book);
+        when(bookRepository.findById(anyLong())).thenReturn(Optional.of(book));
         assertEquals(2, bookService.getAllComments(0).size());
     }
 
@@ -120,7 +121,7 @@ class BookServiceImplTest {
     @DisplayName("..check for comment")
     void shouldReturnCommentForBook() {
         BookComment bookComment = new BookComment(0, "any comment");
-        when(bookCommentRepository.findById(anyLong())).thenReturn(bookComment);
+        when(bookCommentRepository.findById(anyLong())).thenReturn(Optional.of(bookComment));
         BookService bookService = new BookServiceImpl(bookRepository, authorRepository, genreRepository, bookCommentRepository);
         assertThat(bookService.getComment(1L)).isNotNull().usingRecursiveComparison().isEqualTo(bookComment);
     }
@@ -138,7 +139,7 @@ class BookServiceImplTest {
     @DisplayName("..check for comment updated")
     void shouldUpdateCommentToBook() {
         BookComment bookComment = new BookComment(0, "comment");
-        when(bookCommentRepository.findById(anyLong())).thenReturn(bookComment);
+        when(bookCommentRepository.findById(anyLong())).thenReturn(Optional.of(bookComment));
         when(bookCommentRepository.save(any())).thenReturn(bookComment);
         BookService bookService = new BookServiceImpl(bookRepository, authorRepository, genreRepository, bookCommentRepository);
         assertThat(bookService.updateComment(0, "comment")).isNotNull().usingRecursiveComparison().isEqualTo(bookComment);
