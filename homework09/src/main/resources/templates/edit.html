@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Редактирование книги</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h3>Редактирование книги</h3>
+    </div>
+    <form id="edit-form" action="edit.html" th:action="@{/edit(id=${book.id})}" th:method="post" th:object="${book}">
+        <div class="form-group">
+            <label for="id">ID:</label>
+            <input type="text" class="form-control" id="id" name="id" th:value="*{id}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="title">Название:</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Введите название книги"
+                   th:value="*{title}">
+            <div class="errors" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
+        </div>
+        <div class="form-group">
+            <label for="author">Автор:</label>
+            <input type="text" class="form-control" id="author" name="author" th:value="*{author}" readonly="readonly">
+        </div>
+        <div class="form-group">
+            <label for="genre">Жанр:</label>
+            <input type="text" class="form-control" id="genre" name="genre" th:value="*{genre}" readonly="readonly">
+        </div>
+        <button type="submit" class="btn btn-default">Сохранить</button>
+        <a href="list.html" th:href="@{/}">
+            <button type="button" class="btn btn-default">Отмена</button>
+        </a>
+    </form>
+</div>
+</body>
+</html>
