@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Заведение книги</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:insert="common/menu::menu"/>
+<div class="container">
+    <div class="page-header">
+        <h3>Заведение книги</h3>
+    </div>
+    <form id="create-form" action="create.html" th:action="@{/create}" th:method="post" th:object="${book}">
+        <div class="form-group">
+            <label for="title">Название:</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Введите название книги"
+                   th:value="*{title}">
+            <div class="errors" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
+        </div>
+        <div class="form-group">
+            <label for="author">Автор:</label>
+            <select class="form-control" id="author" name="author"></select>
+            <div class="errors" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">author error</div>
+        </div>
+        <div class="form-group">
+            <label for="genre">Жанр:</label>
+            <select class="form-control" id="genre" name="genre"></select>
+            <div class="errors" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}">genre error</div>
+        </div>
+        <button type="submit" class="btn btn-default">Сохранить</button>
+        <a href="list.html" th:href="@{/}">
+            <button type="button" class="btn btn-default">Отмена</button>
+        </a>
+    </form>
+</div>
+<script>
+    $(function () {
+        $.get('/api/authors').done(function (authors) {
+            authors.forEach(function (author) {
+                $('[id="author"]').append(`
+                    <option>${author.name}</option>
+                `)
+            });
+        })
+        $.get('/api/genres').done(function (genres) {
+            genres.forEach(function (genre) {
+                $('[id="genre"]').append(`
+                    <option>${genre.name}</option>
+                `)
+            });
+        })
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Редактирование книги</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:insert="common/menu::menu"/>
+<div class="container">
+    <div class="page-header">
+        <h3>Редактирование книги</h3>
+    </div>
+    <form id="edit-form" action="edit" th:action="@{/edit(id=${bookId})}" th:method="post">
+        <div class="form-group">
+            <label for="id">ID:</label>
+            <input type="text" class="form-control" id="id" name="id" th:value="${bookId}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="title">Название:</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Введите название книги">
+        </div>
+        <div class="form-group">
+            <label for="author">Автор:</label>
+            <select class="form-control" id="author" name="author"></select>
+        </div>
+        <div class="form-group">
+            <label for="genre">Жанр:</label>
+            <select class="form-control" id="genre" name="genre"></select>
+        </div>
+        <button type="submit" class="btn btn-default">Сохранить</button>
+        <a href="/" th:href="@{/}">
+            <button type="button" class="btn btn-default">Отмена</button>
+        </a>
+    </form>
+</div>
+<script th:inline="javascript">
+    $(function () {
+        $.get('/api/books/[[${bookId}]]').done(function (book) {
+            $('[id="title"]').val(`${book.title}`);
+            $.get('/api/authors').done(function (authors) {
+                var author_selector = $('[id="author"]');
+                authors.forEach(function (author) {
+                    author_selector.append(`
+                            <option` + ((book.author == author.name) ? ` selected` : ``) + `>${author.name}</option>
+                        `);
+                });
+            });
+            $.get('/api/genres').done(function (genres) {
+                var genre_selector = $('[id="genre"]');
+                genres.forEach(function (genre) {
+                    genre_selector.append(
+                        `<option` + ((book.genre == genre.name) ? ` selected` : ``) + `>${genre.name}</option>`
+                    );
+                });
+            });
+        })
+    });
+</script>
+</body>
+</html>

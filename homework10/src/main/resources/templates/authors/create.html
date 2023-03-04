@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Заведение автора</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:insert="common/menu::menu"/>
+<div class="container">
+    <div class="page-header">
+        <h3>Заведение автора</h3>
+    </div>
+    <form id="create-form" action="/authors/create.html" th:action="@{/authors/create}" th:method="post" th:object="${author}">
+        <div class="form-group">
+            <label for="name">Имя:</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Введите имя автора"
+                   th:value="*{name}">
+            <div class="errors" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</div>
+        </div>
+        <button type="submit" class="btn btn-default">Сохранить</button>
+        <a href="/authors/">
+            <button type="button" class="btn btn-default">Отмена</button>
+        </a>
+    </form>
+</div>
+</body>
+</html>

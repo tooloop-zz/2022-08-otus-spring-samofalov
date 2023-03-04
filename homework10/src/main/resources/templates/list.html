@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Список книг</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:insert="common/menu::menu"/>
+<div class="container">
+    <div class="page-header">
+        <h3>Список книг</h3>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th scope="col">Название</th>
+            <th scope="col">Автор</th>
+            <th scope="col">Жанр</th>
+            <th scope="col">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+    </table>
+    <a th:href="@{/create}" class="btn btn-default">Создать</a>
+</div>
+<script>
+    $(function () {
+        $.get('/api/books').done(function (books) {
+            books.forEach(function (book) {
+                $('tbody').append(`
+                    <tr>
+                        <td>${book.id}</td>
+                        <td>${book.title}</td>
+                        <td>${book.author}</td>
+                        <td>${book.genre}</td>
+                        <td>
+                        <div class="btn-group" role="group" aria-label="...">
+                        <a href="/read?id=${book.id}" class="btn btn-default">Открыть</a>
+                        <a href="/edit?id=${book.id}" class="btn btn-default">Изменить</a>
+                        <a href="/delete?id=${book.id}" class="btn btn-default">Удалить</a>
+                        </div>
+                         </td>
+                    </tr>
+                `)
+            });
+        })
+    });
+</script>
+</body>
+</html>
