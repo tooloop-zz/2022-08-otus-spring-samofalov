@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Просмотр книги</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:insert="common/menu::menu"/>
+<div class="container">
+    <div class="page-header">
+        <h3>Просмотр книги</h3>
+    </div>
+    <div class="form-group">
+        <label for="id">ID:</label>
+        <input type="text" class="form-control" id="id" th:value="${bookId}" disabled>
+    </div>
+    <div class="form-group">
+        <label for="title">Название:</label>
+        <input type="text" class="form-control" id="title" disabled>
+    </div>
+    <div class="form-group">
+        <label for="author">Автор:</label>
+        <input type="text" class="form-control" id="author" disabled>
+    </div>
+    <div class="form-group">
+        <label for="genre">Жанр:</label>
+        <input type="text" class="form-control" id="genre" disabled>
+    </div>
+
+    <div class="page-header">
+        <h3>Комментарии</h3>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Комментарий</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <a href="list.html" th:href="@{/}">
+        <button type="button" class="btn btn-default">Закрыть</button>
+    </a>
+</div>
+<script th:inline="javascript">
+    $(function () {
+        $.get('/api/books/[[${bookId}]]').done(function (book) {
+            $('[id="title"]').val(`${book.title}`);
+            $('[id="author"]').val(`${book.author}`);
+            $('[id="genre"]').val(`${book.genre}`);
+            var tab = $('tbody');
+            book.comments.forEach(function (comment) {
+                tab.append(`
+                    <tr>
+                        <td>${comment.id}</td>
+                        <td>${comment.text}</td>
+                    </tr>
+                `)
+            });
+        })
+    });
+</script>
+</body>
+</html>

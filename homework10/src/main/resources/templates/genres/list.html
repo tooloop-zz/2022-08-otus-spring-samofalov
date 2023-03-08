@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Список жанров</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:insert="common/menu::menu"/>
+<div class="container">
+    <div class="page-header">
+        <h3>Список жанров</h3>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th scope="col">Наименование</th>
+        </tr>
+        </thead>
+        <tbody>
+    </table>
+    <a th:href="@{/genres/create}" class="btn btn-default">Создать</a>
+</div>
+<script>
+    $(function () {
+        $.get('/api/genres').done(function (genres) {
+            genres.forEach(function (genre) {
+                $('tbody').append(`
+                    <tr>
+                        <td>${genre.id}</td>
+                        <td>${genre.name}</td>
+                    </tr>
+                `)
+            });
+        })
+    });
+</script>
+</body>
+</html>
